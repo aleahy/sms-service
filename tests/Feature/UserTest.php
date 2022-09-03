@@ -48,16 +48,54 @@ class UserTest extends TestCase
             'email' => 'alex@example.com'
         ])->assertSuccessful()
             ->assertJson([
-                'user' => [
-                    'name' => 'Alex',
-                    'email' => 'alex@example.com'
-                ]
+                'name' => 'Alex',
+                'email' => 'alex@example.com'
             ]);
 
         //User exists in database
         $this->assertDatabaseHas('users', [
             'name' => 'Alex',
             'email' => 'alex@example.com'
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function test_a_user_can_delete_a_user()
+    {
+        $user = User::factory()->create();
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+        ]);
+
+        $this->logIn()
+            ->delete(route('users.destroy', ['user' => $user]))
+            ->assertSuccessful();
+
+        $this->assertDatabaseMissing('users', [
+            'id' => $user->id
+        ]);
+    }
+
+    public function test_a_user_can_update_a_user()
+    {
+        $user = User::factory()->create([
+            'name' => 'First Name',
+            'email' => 'first@example.com'
+        ]);
+
+        $this->logIn()
+            ->patchJson(route('users.update', ['user' => $user]), [
+                'name' => 'New Name',
+                'email' => 'new@example.com'
+            ])
+            ->assertSuccessful();
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'name' => 'New Name',
+            'email' => 'new@example.com',
         ]);
     }
 

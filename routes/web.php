@@ -36,4 +36,6 @@ Route::get('/dashboard', function () {
 
 Route::post('/users', [UsersController::class, 'store'])->name('users.store');
 Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+Route::delete('/users/{user}', [UsersController::class, 'destroy'])->name('users.destroy');
+Route::patch('/users/{user}', [UsersController::class, 'update'])->name('users.update');
 require __DIR__.'/auth.php';

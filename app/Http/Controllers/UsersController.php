@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,14 +13,7 @@ class UsersController extends Controller
 {
     public function index()
     {
-        $users = User::query()->orderBy('id')
-            ->paginate(20)
-            ->through(function($user) {
-                return [
-                    'id' => $user->id,
-                    'name' => $user->name
-                ];
-            });
+        $users = UserResource::collection(User::paginate());
 
         return Inertia::render('Users/Index', ['users' => $users]);
     }
@@ -30,11 +24,24 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => Hash::make(Str::random(10)),
         ]);
-        return response()->json([
-            'user' => [
-                'name' => $user->name,
-                'email' => $user->email,
-            ]
+
+        return UserResource::make($user);
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return response()->noContent();
+    }
+
+    public function update(User $user, Request $request)
+    {
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
         ]);
+
+        return response()->noContent();
     }
 }
