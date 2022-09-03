@@ -29,8 +29,15 @@ import ConfirmCancel from "@/Components/Modals/ConfirmCancel.vue";
 import Input from "@/Components/Input.vue";
 import LabelledInput from "@/Components/FormComponents/LabelledInput.vue";
 import useAxiosForm from "@/Composables/useAxiosForm.js";
+import {useForm} from "@inertiajs/inertia-vue3";
+import {Inertia} from "@inertiajs/inertia";
 
 const showModal = ref(false);
+// const form = useForm({
+//     name: '',
+//     email: '',
+//     webhook_url: '',
+// });
 const form = useAxiosForm({
     name: '',
     email: '',
@@ -39,8 +46,18 @@ const form = useAxiosForm({
 function submit() {
     form.post(route('users.store'))
         .then(response => {
-            showModal.value = false;
+
+            Inertia.reload();
         })
+    // form.post(route('users.store'), {
+    //     preserveScroll: true,
+    //     onSuccess: () => {
+    //         showModal.value = false;
+    //         form.reset();
+    //     }
+    // })
+
+
 
 }
 </script>

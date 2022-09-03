@@ -25,7 +25,11 @@ class UsersController extends Controller
             'password' => Hash::make(Str::random(10)),
         ]);
 
-        return UserResource::make($user);
+        
+
+        return response()->json([
+            'success' => true,
+        ]);
     }
 
     public function destroy(User $user)
