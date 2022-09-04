@@ -19,7 +19,13 @@ export default function useAxiosForm(data) {
             return new Promise(async (resolve, reject) => {
 
                 try {
-                    let response = await axios[method](url, this.data());
+                    let response = undefined;
+                    if (data) {
+                        response = await axios[method](url, this.data());
+                    }
+                    else {
+                        response = await axios[method](url);
+                    }
                     resolve(response.data);
                 }
                 catch(error) {
@@ -38,6 +44,7 @@ export default function useAxiosForm(data) {
             return this.submit('post', url);
         },
         data() {
+            console.log(data);
             return Object
                 .keys(data)
                 .reduce((carry, key) => {

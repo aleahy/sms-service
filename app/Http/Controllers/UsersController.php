@@ -20,8 +20,8 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        $user->load('webhook');
-        return Inertia::render('Users/Show', ['user' => $user]);
+        $user->load(['webhook', 'tokens']);
+        return Inertia::render('Users/Show', ['user' => UserResource::make($user)]);
     }
 
     public function store(UserRequest $request)

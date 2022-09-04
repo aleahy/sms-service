@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserTokenController;
 use App\Http\Controllers\UserWebhookController;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -43,6 +44,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('/users/{user}', [UsersController::class, 'update'])->name('users.update');
 
     Route::post('/users/{user}/webhook', [UserWebhookController::class, 'store'])->name('users.webhook.store');
+
+    Route::post('/users/{user}/api', [UserTokenController::class, 'store'])->name('users.sms-token.store');
 });
 require __DIR__.'/auth.php';
 

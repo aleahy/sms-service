@@ -13,7 +13,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    const TOKEN_SEND_SMS = 'sms:send';
+    const TOKEN_SEND_SMS = 'Send SMS Token';
     const TOKEN_ABILITY_SEND_SMS = 'sms:send';
 
     /**

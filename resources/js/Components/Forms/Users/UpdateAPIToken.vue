@@ -1,0 +1,56 @@
+<template>
+    <div>
+        <div class="md:grid md:grid-cols-3 md:gap-6">
+            <div class="md:col-span-1">
+                <div class="px-4 sm:px-0">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">API Token</h3>
+                    <p class="mt-1 text-sm text-gray-600">An API Token is required to send an SMS to this app.</p>
+                </div>
+            </div>
+            <div class="mt-5 md:col-span-2 md:mt-0">
+                <form @submit.prevent="save">
+                    <div class="shadow sm:overflow-hidden sm:rounded-md">
+                        <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+                            <div>
+                                <h2 class="text-sm text-gray-600">API Token</h2>
+                                <div v-if="tokens">
+                                    <div v-for="apiToken in tokens" :key="apiToken.id" class="text-sm text-gray-600 mt-1">
+                                        <div>{{ apiToken.name }}</div>
+                                        <div v-if="token">
+                                            <div class="text-sm text-gray-600 mt-1">{{ token }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                            <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Generate New API Token</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
+<script setup>
+import LabelledInput from '@/Components/FormComponents/LabelledInput.vue'
+import useAxiosForm from "@/Composables/useAxiosForm.js";
+import {ref} from "vue";
+
+
+const props = defineProps({
+    tokens: Object,
+    user_id: Number
+})
+const form = useAxiosForm();
+const token = ref();
+
+function save() {
+    form.post(route('users.sms-token.store', { user: props.user_id }))
+        .then(response => {
+            token.value = response.token;
+        });
+}
+</script>
