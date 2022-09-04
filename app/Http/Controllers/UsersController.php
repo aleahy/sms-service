@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Users\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -17,19 +17,22 @@ class UsersController extends Controller
 
         return Inertia::render('Users/Index', ['users' => $users]);
     }
-    public function store(Request $request)
+
+    public function show(User $user)
+    {
+        $user->load('webhook');
+        return Inertia::render('Users/Show', ['user' => $user]);
+    }
+
+    public function store(UserRequest $request)
     {
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name' => $request->safe()['name'],
+            'email' => $request->safe()['email'],
             'password' => Hash::make(Str::random(10)),
         ]);
 
-        
-
-        return response()->json([
-            'success' => true,
-        ]);
+        return back();
     }
 
     public function destroy(User $user)
@@ -39,13 +42,13 @@ class UsersController extends Controller
         return response()->noContent();
     }
 
-    public function update(User $user, Request $request)
+    public function update(User $user, UserRequest $request)
     {
         $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name' => $request->safe()['name'],
+            'email' => $request->safe()['email'],
         ]);
 
-        return response()->noContent();
+        return back();
     }
 }

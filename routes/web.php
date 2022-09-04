@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserWebhookController;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Foundation\Application;
@@ -37,8 +38,11 @@ Route::get('/dashboard', function () {
 Route::group(['middleware' => ['auth']], function() {
     Route::post('/users', [UsersController::class, 'store'])->name('users.store');
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');
+    Route::get('/users/{user}', [UsersController::class, 'show'])->name('users.show');
     Route::delete('/users/{user}', [UsersController::class, 'destroy'])->name('users.destroy');
     Route::patch('/users/{user}', [UsersController::class, 'update'])->name('users.update');
+
+    Route::post('/users/{user}/webhook', [UserWebhookController::class, 'store'])->name('users.webhook.store');
 });
 require __DIR__.'/auth.php';
 

@@ -10,7 +10,8 @@ defineProps({
         type: String,
         default: 'text',
         required: false,
-    }
+    },
+    error: String,
 });
 
 defineEmits(['update:modelValue']);
@@ -31,6 +32,9 @@ onMounted(() => {
             <input  :type="type" :id="id" :placeholder="placeholder" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" ref="input"
                     class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             >
+        </div>
+        <div v-show="error" class="mt-1">
+            <p class="text-xs text-red-500">{{ error }}</p>
         </div>
     </div>
 </template>
