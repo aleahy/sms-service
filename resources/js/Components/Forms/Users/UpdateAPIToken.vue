@@ -13,13 +13,21 @@
                         <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
                             <div>
                                 <h2 class="text-sm text-gray-600">API Token</h2>
-                                <div v-if="tokens">
-                                    <div v-for="apiToken in tokens" :key="apiToken.id" class="text-sm text-gray-600 mt-1">
-                                        <div>{{ apiToken.name }}</div>
-                                        <div v-if="token">
-                                            <div class="text-sm text-gray-600 mt-1">{{ token }}</div>
+                                <div class="mt-1">
+                                    <div v-if="tokens.length > 0 && !token">
+                                        <div v-for="apiToken in tokens" :key="apiToken.id" class="flex justify-between text-sm text-gray-600 mt-1">
+                                            <div>{{ apiToken.name }}</div>
+                                            <div>Created at {{ apiToken.created_at }}</div>
+                                            <div class="text-xs">Delete</div>
                                         </div>
                                     </div>
+                                    <div v-else-if="!token" class="text-gray-600 text-sm">
+                                        No tokens have been created.
+                                    </div>
+                                </div>
+                                <div v-if="token">
+                                    <div class="text-sm text-gray-600 mt-1 border inline-block py-2 px-8 rounded">{{ token }}</div>
+                                    <div class="mt-2 text-xs">Put this token in a safe place. You will not be able to retrieve it if you lose it.</div>
                                 </div>
 
                             </div>

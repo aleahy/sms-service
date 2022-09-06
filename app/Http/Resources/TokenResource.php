@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class TokenResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,10 +17,7 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'email' => $this->email,
-            'webhook' => $this->whenLoaded('webhook', $this->webhook),
-            'tokens' => $this->whenLoaded('tokens', TokenResource::collection($this->tokens)),
-            'link' => $this->showLink(),
+            'created_at' => $this->created_at->format('Y-m-d H:i:s') . ' (UTC)',
         ];
     }
 }
