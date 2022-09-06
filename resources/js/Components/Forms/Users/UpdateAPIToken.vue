@@ -18,11 +18,13 @@
                                         <div v-for="apiToken in tokens" :key="apiToken.id" class="flex justify-between text-sm text-gray-600 mt-1">
                                             <div>{{ apiToken.name }}</div>
                                             <div>Created at {{ apiToken.created_at }}</div>
-                                            <div class="text-xs">Delete</div>
+                                            <form @submit.prevent="deleteToken(apiToken.id)">
+                                                <button type="submit" class="text-xs text-indigo-600 hover:text-indigo-900">Delete</button>
+                                            </form>
                                         </div>
                                     </div>
                                     <div v-else-if="!token" class="text-gray-600 text-sm">
-                                        No tokens have been created.
+                                        There are currently no tokens
                                     </div>
                                 </div>
                                 <div v-if="token">
@@ -46,6 +48,7 @@
 import LabelledInput from '@/Components/FormComponents/LabelledInput.vue'
 import useAxiosForm from "@/Composables/useAxiosForm.js";
 import {ref} from "vue";
+import { Inertia } from "@inertiajs/inertia";
 
 
 const props = defineProps({
@@ -55,10 +58,18 @@ const props = defineProps({
 const form = useAxiosForm();
 const token = ref();
 
+function deleteToken(token_id) {
+    Inertia.delete(route('users.sms-token.delete', { user: props.user_id, token: token_id}), {
+        preserveScroll: true,
+    });
+}
+
 function save() {
     form.post(route('users.sms-token.store', { user: props.user_id }))
         .then(response => {
             token.value = response.token;
         });
 }
+
+
 </script>

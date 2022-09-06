@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use Laravel\Sanctum\PersonalAccessToken as Token;
 use Illuminate\Support\Str;
 
 class UserTokenController extends Controller
@@ -25,5 +25,12 @@ class UserTokenController extends Controller
         return response()->json([
             'token' => $plainTxt
         ]);
+    }
+
+    public function delete(User $user, Token $token)
+    {
+        $token->delete();
+
+        return redirect(route('users.show', ['user' => $user]));
     }
 }

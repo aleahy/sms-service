@@ -46,6 +46,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/users/{user}/webhook', [UserWebhookController::class, 'store'])->name('users.webhook.store');
 
     Route::post('/users/{user}/api', [UserTokenController::class, 'store'])->name('users.sms-token.store');
+    Route::delete('/users/{user}/api/{token}', [UserTokenController::class, 'delete'])->name('users.sms-token.delete');
+
 });
 require __DIR__.'/auth.php';
 
