@@ -44,9 +44,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('/users/{user}', [UsersController::class, 'update'])->name('users.update');
 
     Route::post('/users/{user}/webhook', [UserWebhookController::class, 'store'])->name('users.webhook.store');
+    Route::delete('/users/{user}/webhook', [UserWebhookController::class, 'destroy'])->name('users.webhook.delete');
 
     Route::post('/users/{user}/api', [UserTokenController::class, 'store'])->name('users.sms-token.store');
-    Route::delete('/users/{user}/api/{token}', [UserTokenController::class, 'delete'])->name('users.sms-token.delete');
+    Route::delete('/users/{user}/api/{token}', [UserTokenController::class, 'destroy'])->name('users.sms-token.delete');
 
 });
 require __DIR__.'/auth.php';

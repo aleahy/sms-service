@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Users\WebhookStoreRequest;
 use App\Models\User;
+use App\Models\Webhook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -16,7 +17,7 @@ class UserWebhookController extends Controller
             $user->webhook->url = $request->safe()['webhook_url'];
             $user->webhook->save();
 
-            return response()->noContent();
+            return response()->json(['secret' => $user->webhook->secret]);
         }
 
         $secret = Str::random(40);
@@ -26,5 +27,13 @@ class UserWebhookController extends Controller
         ]);
 
         return response()->json(['secret' => $secret]);
+    }
+
+    public function destroy(User $user)
+    {
+        $webhook = Webhook::where('user_id', $user->id)->first();
+        $webhook->delete();
+
+        return back();
     }
 }

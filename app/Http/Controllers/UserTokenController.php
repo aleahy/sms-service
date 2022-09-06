@@ -27,7 +27,7 @@ class UserTokenController extends Controller
         ]);
     }
 
-    public function delete(User $user, Token $token)
+    public function destroy(User $user, Token $token)
     {
         $token->delete();
 

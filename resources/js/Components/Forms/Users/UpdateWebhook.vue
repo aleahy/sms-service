@@ -16,7 +16,10 @@
                             </div>
                             <div v-if="secret">
                                 <h2 class="text-sm text-gray-600">Signing Secret</h2>
-                                <div class="text-sm text-gray-600 mt-1">{{ secret }}</div>
+                                <div class="flex justify-between">
+                                    <div class="text-sm text-gray-600 mt-1">{{ secret }}</div>
+                                    <button type="button" @click.prevent="deleteWebhook" class="text-indigo-600 hover:text-indigo-900 text-sm">Delete</button>
+                                </div>
                             </div>
                         </div>
                         <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
@@ -31,6 +34,7 @@
 <script setup>
 import LabelledInput from '@/Components/FormComponents/LabelledInput.vue'
 import useAxiosForm from "@/Composables/useAxiosForm.js";
+import { Inertia } from "@inertiajs/inertia";
 import {ref} from "vue";
 
 
@@ -48,5 +52,15 @@ function save() {
         .then(response => {
             secret.value = response.secret;
         });
+}
+
+function deleteWebhook() {
+    Inertia.delete(route('users.webhook.delete', { user: props.user_id}), {
+        preserveScroll: true,
+        onSuccess: () => {
+            form.webhook_url = '';
+            secret.value = '';
+        }
+    });
 }
 </script>

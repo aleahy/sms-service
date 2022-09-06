@@ -71,4 +71,24 @@ class WebhookTest extends TestCase
             'webhook_url' => ''
         ])->assertJsonValidationErrors(['webhook_url' => 'required']);
     }
+
+    /**
+     * @test
+     */
+    public function test_a_webhook_can_be_deleted()
+    {
+        $this->logIn();
+        $user = User::factory()->has(Webhook::factory())->create();
+
+        $this->assertDatabaseHas('webhooks', [
+            'user_id' => $user->id
+        ]);
+
+        $this->delete(route('users.webhook.delete', ['user' => $user]))
+            ->assertRedirect(route('users.show', ['user' => $user]));
+
+        $this->assertDatabaseMissing('webhooks', [
+            'user_id' => $user->id
+        ]);
+    }
 }
