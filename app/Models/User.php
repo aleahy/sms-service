@@ -55,4 +55,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(Webhook::class);
     }
+
+    public function sentSMSs()
+    {
+        return $this->hasMany(SMS::class, 'sender_id');
+    }
+
+    public function receivedSMSs()
+    {
+        return $this->hasMany(SMS::class, 'recipient_id');
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReceivedSMSController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UserTokenController;
 use App\Http\Controllers\UserWebhookController;
@@ -48,6 +49,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::post('/users/{user}/api', [UserTokenController::class, 'store'])->name('users.sms-token.store');
     Route::delete('/users/{user}/api/{token}', [UserTokenController::class, 'destroy'])->name('users.sms-token.delete');
+
+    Route::get('/sms/received', [ReceivedSMSController::class, 'index'])->name('sms.received.index');
 
 });
 require __DIR__.'/auth.php';
