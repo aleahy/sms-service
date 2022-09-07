@@ -43,7 +43,7 @@ class WebhookTest extends TestCase
 
         $this->post(route('users.webhook.store', ['user' => $user]),[
             'webhook_url' => 'https://test.com/webhook'
-        ])->assertNoContent();
+        ])->assertJsonStructure(['secret']);
 
         $this->assertDatabaseHas('webhooks', [
             'user_id' => $user->id,
@@ -83,7 +83,7 @@ class WebhookTest extends TestCase
         $this->assertDatabaseHas('webhooks', [
             'user_id' => $user->id
         ]);
-
+        $this->get(route('users.show', ['user' => $user]));
         $this->delete(route('users.webhook.delete', ['user' => $user]))
             ->assertRedirect(route('users.show', ['user' => $user]));
 
