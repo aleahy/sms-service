@@ -11,7 +11,7 @@ class ReceivedSMSController extends Controller
 {
     public function index()
     {
-        $receivedSMSs = SMSResource::collection(SMS::received()->paginate());
+        $receivedSMSs = SMSResource::collection(SMS::with('sender')->received()->paginate());
 
         return Inertia::render('ReceivedSMS/Index', ['smss' => $receivedSMSs]);
     }
