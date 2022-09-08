@@ -23,7 +23,7 @@
                             </div>
                         </div>
                         <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                            <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
+                            <Button>Save</Button>
                         </div>
                     </div>
                 </form>
@@ -36,6 +36,7 @@ import LabelledInput from '@/Components/FormComponents/LabelledInput.vue'
 import useAxiosForm from "@/Composables/useAxiosForm.js";
 import { Inertia } from "@inertiajs/inertia";
 import {ref} from "vue";
+import Button from "@/Components/Button.vue";
 
 
 const props = defineProps({

@@ -36,7 +36,7 @@
 
                         </div>
                         <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                            <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Generate New API Token</button>
+                            <Button>Generate New API Token</Button>
                         </div>
                     </div>
                 </form>
@@ -45,7 +45,8 @@
     </div>
 </template>
 <script setup>
-import LabelledInput from '@/Components/FormComponents/LabelledInput.vue'
+import LabelledInput from '@/Components/FormComponents/LabelledInput.vue';
+import Button from '@/Components/Button.vue';
 import useAxiosForm from "@/Composables/useAxiosForm.js";
 import {ref} from "vue";
 import { Inertia } from "@inertiajs/inertia";

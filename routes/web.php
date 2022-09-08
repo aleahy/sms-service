@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ReceivedSMSController;
+use App\Http\Controllers\SMSController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UserTokenController;
 use App\Http\Controllers\UserWebhookController;
@@ -52,6 +53,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/sms/received', [ReceivedSMSController::class, 'index'])->name('sms.received.index');
 
+    Route::get('sms/{sms}', [SMSController::class, 'show'])->name('sms.show');
 });
 require __DIR__.'/auth.php';
 
