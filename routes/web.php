@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/sms/received', [ReceivedSMSController::class, 'index'])->name('sms.received.index');
 
     Route::get('sms/{sms}', [SMSController::class, 'show'])->name('sms.show');
+    Route::post('sms', [SMSController::class, 'store'])->name('sms.store');
 });
 require __DIR__.'/auth.php';
 

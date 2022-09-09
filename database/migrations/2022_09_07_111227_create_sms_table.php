@@ -23,8 +23,8 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('users')
                 ->cascadeOnDelete();
-            $table->string('from_phone_number');
-            $table->string('to_phone_number');
+            $table->string('from_phone_number')->nullable();
+            $table->string('to_phone_number')->nullable();
             $table->text('message');
             $table->boolean('sent');
             $table->timestamps();

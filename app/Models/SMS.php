@@ -10,6 +10,7 @@ class SMS extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
     protected $table = 'sms';
     protected $casts = [
         'sent' => 'boolean',
