@@ -6,7 +6,6 @@ use App\Http\Requests\SendSMSRequest;
 use App\Http\Resources\SMSResource;
 use App\Models\SMS;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\WebhookServer\WebhookCall;
 

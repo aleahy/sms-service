@@ -25,7 +25,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->string('from_phone_number')->nullable();
             $table->string('to_phone_number')->nullable();
-            $table->text('message');
+            $table->string('message', 1600);
             $table->boolean('sent');
             $table->timestamps();
         });
