@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SendSMSRequest;
 use App\Http\Resources\SMSResource;
 use App\Models\SMS;
 use App\Models\User;
@@ -18,7 +19,7 @@ class SMSController extends Controller
         return Inertia::render('SMS/Show', ['sms' => SMSResource::make($sms)]);
     }
 
-    public function store(Request $request)
+    public function store(SendSMSRequest $request)
     {
         $recipient = User::with('webhook')
             ->find($request->recipient_id);
@@ -38,5 +39,7 @@ class SMSController extends Controller
             'message' => $request->message,
             'sent' => true,
         ]);
+
+        return back();
     }
 }

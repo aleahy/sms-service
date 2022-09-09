@@ -3,10 +3,12 @@
         <div>
             <div>To</div>
             <div class="border p-4 rounded-lg mt-2 shadow text-gray-500">{{ recipient.name }}</div>
+            <ErrorMessage :error="replyForm.errors.recipient_id" class="mt-2"/>
         </div>
         <div class="mt-4">
             <div>Message</div>
             <TextArea v-model="replyForm.message" class="w-full h-48 mt-2"/>
+            <ErrorMessage :error="replyForm.errors.message" />
         </div>
         <template v-slot:footer>
             <div class="flex justify-between items-center">
@@ -30,13 +32,14 @@ import FormBox from "@/Components/FormComponents/FormBox.vue";
 import TextArea from "@/Components/FormComponents/TextArea.vue";
 import Button from "@/Components/Button.vue";
 import { ref } from "vue";
+import ErrorMessage from "@/Components/FormComponents/ErrorMessage.vue";
 const props = defineProps({
     recipient: Object,
     from: String,
 });
 
 const replyForm = useForm({
-    to: props.recipient.id,
+    recipient_id: props.recipient.id,
     from: props.from,
     message: ''
 });
@@ -45,10 +48,10 @@ const sentSuccessful = ref(false);
 function sendReply() {
     replyForm.post(route('sms.store'), {
         onSuccess: () => {
-            replyForm.reset('message');
             showSentMessage();
+            replyForm.reset('message');
         }
-    });
+    } );
 }
 
 function showSentMessage() {
