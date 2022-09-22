@@ -20,7 +20,7 @@
                             <tr v-for="user in users.data" :key="user.id">
                                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{{ user.name }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ user.email }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center"><CheckCircleIcon  v-if="user.tokens.length > 0" class="w-5 h-5 inline-block"/> </td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center"><CheckCircleIcon  v-if="user.tokens?.length > 0" class="w-5 h-5 inline-block"/> </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 text-center"><CheckCircleIcon v-if="user.webhook" class="w-5 h-5 inline-block"/></td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                     <Link :href="user.link" class="text-indigo-600 hover:text-indigo-900"

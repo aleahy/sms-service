@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Users\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -13,7 +14,7 @@ class UsersController extends Controller
 {
     public function index()
     {
-        $users = UserResource::collection(User::paginate());
+        $users = UserResource::collection(User::with(['tokens', 'webhook'])->paginate());
 
         return Inertia::render('Users/Index', ['users' => $users]);
     }
@@ -21,6 +22,8 @@ class UsersController extends Controller
     public function show(User $user)
     {
         $user->load(['webhook', 'tokens']);
+        $user->loadCount('receivedSMSs');
+
         return Inertia::render('Users/Show', ['user' => UserResource::make($user)]);
     }
 
@@ -35,7 +38,7 @@ class UsersController extends Controller
         return back();
     }
 
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
         $user->delete();
 

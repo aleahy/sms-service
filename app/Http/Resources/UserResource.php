@@ -18,8 +18,9 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'webhook' => $this->whenLoaded('webhook', $this->webhook),
-            'tokens' => $this->whenLoaded('tokens', TokenResource::collection($this->tokens)),
+            'webhook' => $this->whenLoaded('webhook', fn() => $this->webhook),
+            'tokens' => TokenResource::collection($this->whenLoaded('tokens')),
+            'received_sms_count' => $this->whenCounted('receivedSMSs'),
             'link' => $this->showLink(),
         ];
     }

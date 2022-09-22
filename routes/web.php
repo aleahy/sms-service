@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ReceivedSMSController;
 use App\Http\Controllers\SMSController;
+use App\Http\Controllers\UserReceivedSMSController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UserTokenController;
 use App\Http\Controllers\UserWebhookController;
@@ -39,6 +40,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::group(['middleware' => ['auth']], function() {
+    Route::delete('/users/{user}/sms', [UserReceivedSMSController::class, 'destroy'])->name('users.sms.delete');
+
     Route::post('/users', [UsersController::class, 'store'])->name('users.store');
     Route::get('/users', [UsersController::class, 'index'])->name('users.index');
     Route::get('/users/{user}', [UsersController::class, 'show'])->name('users.show');
@@ -50,6 +53,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::post('/users/{user}/api', [UserTokenController::class, 'store'])->name('users.sms-token.store');
     Route::delete('/users/{user}/api/{token}', [UserTokenController::class, 'destroy'])->name('users.sms-token.delete');
+
 
     Route::get('/sms/received', [ReceivedSMSController::class, 'index'])->name('sms.received.index');
 

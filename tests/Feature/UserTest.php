@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\SMS;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -224,5 +225,37 @@ class UserTest extends TestCase
             'name' => 'New Name',
             'email' => 'same@example.com'
         ]);
+    }
+
+    /**
+     * @test
+     */
+    public function test_it_can_delete_all_smss_received_from_a_particular_user()
+    {
+        $this->logIn();
+
+
+        $user = User::factory()->create();
+        SMS::factory()->count(20)->for($user, 'sender')->create([
+            'recipient_id' => null,
+            'sent' => false
+        ]);
+
+
+        $sms = SMS::factory()->for(User::factory(), 'sender')->create(['recipient_id' => null]);
+
+        $this->get(route('users.show', ['user' => $user]));
+
+        $this->assertDatabaseCount('sms', 21);
+        $this->assertDatabaseHas('users', ['id' => $user->id]);
+
+        $this->delete(route('users.sms.delete', ['user' => $user]))
+            ->assertRedirect(route('users.show', ['user' => $user]));
+
+        $this->assertDatabaseCount('sms', 1);
+        $this->assertDatabaseHas('sms', [
+            'id' => $sms->id
+        ]);
+        $this->assertDatabaseHas('users', ['id' => $user->id]);
     }
 }

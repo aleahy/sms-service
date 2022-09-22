@@ -56,12 +56,20 @@ class User extends Authenticatable
         return $this->hasOne(Webhook::class);
     }
 
-    public function sentSMSs()
+    /**
+     * The SMSs this user has sent to this system
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function receivedSMSs()
     {
         return $this->hasMany(SMS::class, 'sender_id');
     }
 
-    public function receivedSMSs()
+    /**
+     * The SMSs this system has sent to this user
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function sentSMSs()
     {
         return $this->hasMany(SMS::class, 'recipient_id');
     }

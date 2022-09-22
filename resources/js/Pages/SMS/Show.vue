@@ -8,7 +8,7 @@
             </div>
             <div class="p-4 w-1/2">
                 <h1 class="text-lg">Send Reply</h1>
-                <SendSMS :recipient="sms.sender" from="sms.to_phone_number" />
+                <SendSMS :recipient="sms.sender" from="sms.to_phone_number"  class="mt-3"/>
 
             </div>
         </div>
