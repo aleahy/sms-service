@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfilePasswordController;
 use App\Http\Controllers\ReceivedSMSController;
 use App\Http\Controllers\SMSController;
 use App\Http\Controllers\UserReceivedSMSController;
@@ -59,6 +61,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('sms/{sms}', [SMSController::class, 'show'])->name('sms.show');
     Route::post('sms', [SMSController::class, 'store'])->name('sms.store');
+
+    Route::patch('/profile/password', [ProfilePasswordController::class, 'update'])->name('profile.password.update');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
 });
 require __DIR__.'/auth.php';
 
