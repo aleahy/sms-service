@@ -8,7 +8,7 @@
             </div>
             <div class="p-4 w-1/2">
                 <h1 class="text-lg">Send Reply</h1>
-                <SendSMS :recipient="sms.sender" from="sms.to_phone_number"  class="mt-3"/>
+                <SendSMS :recipient="sms.sender" :from="sms.to_phone_number" :sent-successful="sentSuccessful" class="mt-3"/>
 
             </div>
         </div>
@@ -26,6 +26,7 @@ import ViewSMSMessage from "@/Components/ViewSMSMessage.vue";
 import SendSMS from "@/Components/Forms/SMS/SendSMS.vue";
 const props = defineProps({
     sms: Object,
+    sentSuccessful: Boolean,
 });
 
 const replyForm = useForm({

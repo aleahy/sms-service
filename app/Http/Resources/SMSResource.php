@@ -23,6 +23,7 @@ class SMSResource extends JsonResource
             'recipient' => UserResource::make($this->whenLoaded('recipient')),
             'message' => $this->message,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'created_at_diff' => $this->created_at->diffForHumans(),
             'link' => route('sms.show', ['sms' => $this->id]),
         ];
     }

@@ -36,6 +36,7 @@ import ErrorMessage from "@/Components/FormComponents/ErrorMessage.vue";
 const props = defineProps({
     recipient: Object,
     from: String,
+    sentSuccessful: String,
 });
 
 const replyForm = useForm({

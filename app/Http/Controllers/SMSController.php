@@ -15,7 +15,10 @@ class SMSController extends Controller
     {
         $sms->load(['sender', 'recipient']);
 
-        return Inertia::render('SMS/Show', ['sms' => SMSResource::make($sms)]);
+        return Inertia::render('SMS/Show', [
+            'sms' => SMSResource::make($sms),
+            'sentSuccessful' => session('sentSuccessful'),
+        ]);
     }
 
     public function store(SendSMSRequest $request)
@@ -39,6 +42,6 @@ class SMSController extends Controller
             'sent' => true,
         ]);
 
-        return back();
+        return back()->with(['sentSuccessful' => true]);
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <IndexTable :meta="smss.meta" table-fixed>
         <TableHeader>
-            <TableHeaderCell class="text-left w-1/6">Received At</TableHeaderCell>
+            <TableHeaderCell class="text-left w-1/6">Received</TableHeaderCell>
             <TableHeaderCell class="w-1/6 text-left">From</TableHeaderCell>
             <TableHeaderCell class="w-1/6 text-left">To</TableHeaderCell>
             <TableHeaderCell class="w-1/3 text-left">Message</TableHeaderCell>
@@ -10,9 +10,9 @@
 
         <TableBody>
             <TableBodyRow v-for="sms in smss.data" :key="sms.id" class="hover:bg-gray-50">
-                <TableBodyCell class="w-1/6">{{ sms.created_at }}</TableBodyCell>
-                <TableBodyCell  class="w-1/6">{{ sms?.sender.name ?? sms.from_phone_number }}</TableBodyCell>
-                <TableBodyCell  class="w-1/6">{{ sms.to_phone_number }}</TableBodyCell>
+                <TableBodyCell class="truncate w-1/6">{{ sms.created_at_diff }}</TableBodyCell>
+                <TableBodyCell  class="truncate w-1/6">{{ sms?.sender.name ?? sms.from_phone_number }}</TableBodyCell>
+                <TableBodyCell  class="truncate w-1/6">{{ sms.to_phone_number }}</TableBodyCell>
                 <TableBodyCell class="truncate w-1/3">{{ sms.message }}</TableBodyCell>
                 <TableBodyCell class="text-xs text-right">
                     <Link :href="sms.link" class="text-indigo-600 hover:text-indigo-900">
